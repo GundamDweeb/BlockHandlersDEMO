@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "NFTXVaultFactory": {
+      "address": "0x1d552A0e6c2f680872C4a88b1e7def05F1858dF0",
+      "startBlock": 9539333
+    }
+  }
+}

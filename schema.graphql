@@ -1,0 +1,11 @@
+type TenBlocksAggregate @entity {
+  id: ID!
+  transferAmount: BigInt!
+  startBlock: BigInt! 
+  endBlock: BigInt! 
+}
+
+type BlockTransferData @entity {
+  id: ID!
+  transferAmount: BigInt!
+}

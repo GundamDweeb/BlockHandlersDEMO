@@ -1,0 +1,51 @@
+specVersion: 0.0.8
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NFTXVaultFactory
+    network: goerli
+    source:
+      address: "0x1d552A0e6c2f680872C4a88b1e7def05F1858dF0"
+      abi: NFTXVaultFactory
+      startBlock: 9539332
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - BeaconUpgraded
+        - Upgraded
+      abis:
+        - name: NFTXVaultFactory
+          file: ./abis/NFTXVaultFactory.json
+      blockHandlers:
+        - handler: handleTen
+          filter:
+            kind: polling
+            every: 10
+        - handler: handleSetup
+          filter:
+            kind: once
+      file: ./src/nftx-vault-factory.ts
+templates:
+  - kind: ethereum/contract
+    name: Token
+    network: goerli
+    source:
+      abi: IERC20
+    mapping:
+      file: ./src/erc20.ts
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ERC20Contract
+      abis:
+        - name: IERC20
+          file: ./abis/IERC20Metadata.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          topic0: '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+          handler: handleTransfer
